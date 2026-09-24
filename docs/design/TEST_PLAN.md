@@ -90,7 +90,8 @@ The suites live in three files: `tests/fixtures/decision.json`, `tests/fixtures/
 ```
 
 Rules:
-- `facts` is the ground truth for `decide()`. `caseInput` must be consistent with it: `factsFromForm(caseInput)` merged with the hand-annotated LLM-judgment fields (`resolution`, `material`, `materialToLead`, `tooSoon`, `hardStop.kind`) must equal `facts`. `tests/fixtures.test.ts` asserts this for every fixture that has no `"formOnly": false` flag. Judgment fields that the form cannot express are listed in `facts` only.
+- `facts` is the ground truth for `decide()`. `caseInput` must describe the same situation: the form answers plus the pasted words the model would see.
+- Fixtures whose facts the form can fully express (no LLM-only judgment such as `newInfo.material`, `tooSoon`, or a VAGUE resolution the form did not ask about) set `"formEquivalent": true`. For those, `tests/fixtures.test.ts` also asserts `decide(factsFromForm(caseInput)).decision === expect.engine.decision`. Do **not** try to derive LLM judgment fields from the form.
 - `raw` is what a user would type into a plain chat. It must contain every fact the expected decision depends on, and nothing that contradicts it.
 - `materialUnknowns` are compared **as sets** in fixture tests; their priority order is tested in L1 (§7.4).
 - A NFR result always has `"reason"` in `materialUnknowns` (design §6.3).

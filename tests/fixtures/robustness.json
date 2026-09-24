@@ -1,0 +1,3437 @@
+[
+  {
+    "id": "R-01",
+    "suite": "robustness",
+    "category": "shorthand",
+    "title": "Shorthand proposal + 1 nudge",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "sent the proposal last mon (14th), nudged wed, nothing since. what now?",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "PROPOSAL_SENT",
+      "channel": "EMAIL",
+      "leadMessages": "",
+      "userMessages": "",
+      "notes": "sent the proposal last mon (14th), nudged wed, nothing since. what now?",
+      "attempts": 1,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "PROPOSAL_SENT",
+      "channel": null,
+      "attempts": 1,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": {
+        "type": "PENDING_PROPOSAL",
+        "text": ""
+      },
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "FOLLOW_UP",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": true,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "FOLLOW_UP"
+      ],
+      "invariants": [],
+      "precheck": {
+        "mustFlag": [],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-02",
+    "suite": "robustness",
+    "category": "bias",
+    "title": "User assumption: ghosting/dodging",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "2 follow-ups on the quote and they're ghosting me. clearly dodging me lol",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "PROPOSAL_SENT",
+      "channel": "EMAIL",
+      "leadMessages": "",
+      "userMessages": "",
+      "notes": "2 follow-ups on the quote and they're ghosting me. clearly dodging me lol",
+      "attempts": 2,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "PROPOSAL_SENT",
+      "channel": null,
+      "attempts": 2,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": {
+        "type": "PENDING_PROPOSAL",
+        "text": ""
+      },
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [
+        "ghosting",
+        "dodging"
+      ],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "CHANGE_ANGLE",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": true,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "CHANGE_ANGLE"
+      ],
+      "invariants": [
+        "REJECTS_ASSUMPTION"
+      ],
+      "precheck": {
+        "mustFlag": [
+          "USER_ASSUMPTION"
+        ],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-03",
+    "suite": "robustness",
+    "category": "contradictory",
+    "title": "Deal label + 5 attempts",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "HOT lead, super high intent!!! I've messaged 5 times, no reply. one more?",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": "EMAIL",
+      "leadMessages": "",
+      "userMessages": "",
+      "notes": "HOT lead, super high intent!!! I've messaged 5 times, no reply. one more?",
+      "attempts": 5,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": null,
+      "attempts": 5,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [
+        "HOT lead",
+        "high intent"
+      ],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "CLOSE_LOOP",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": true,
+        "suppression": "NONE",
+        "messageAllowed": true,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "CLOSE_LOOP"
+      ],
+      "invariants": [
+        "NO_CTA"
+      ],
+      "precheck": {
+        "mustFlag": [
+          "DEAL_LABEL"
+        ],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-04",
+    "suite": "robustness",
+    "category": "shorthand",
+    "title": "\"not now\", no date",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "lead said 'not now'. no date. next step?",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "NOT_RIGHT_NOW",
+      "channel": "EMAIL",
+      "leadMessages": "not now",
+      "userMessages": "",
+      "notes": "no date. next step?",
+      "attempts": null,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": "NONE_GIVEN",
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "NOT_RIGHT_NOW",
+      "channel": null,
+      "attempts": null,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": {
+        "quote": "not now",
+        "timing": {
+          "type": "NONE",
+          "words": null,
+          "date": null,
+          "resolution": "UNTIMED"
+        }
+      },
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "STOP_ACTIVE_FOLLOW_UP",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": true,
+        "suppression": "PAUSED",
+        "messageAllowed": false,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "STOP_ACTIVE_FOLLOW_UP"
+      ],
+      "invariants": [
+        "NO_MESSAGE"
+      ],
+      "precheck": {
+        "mustFlag": [
+          "NRN"
+        ],
+        "mustNotFlag": [
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-05",
+    "suite": "robustness",
+    "category": "timing",
+    "title": "Vague \"soon\", 10 days elapsed",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "she said she'd get back to me soon. it's been 10 days, no follow-up yet",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": "EMAIL",
+      "leadMessages": "she said she'd get back to me soon",
+      "userMessages": "",
+      "notes": "it's been 10 days, no follow-up yet",
+      "attempts": 0,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": "UNSURE",
+        "words": "soon",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": null,
+      "attempts": 0,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": {
+        "by": "LEAD",
+        "quote": "get back to me soon",
+        "timing": {
+          "type": "VAGUE",
+          "words": "soon",
+          "date": null,
+          "resolution": "AMBIGUOUS"
+        }
+      },
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "NEED_MISSING_INFORMATION",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": false,
+        "waitUntil": null,
+        "materialUnknowns": [
+          "commitmentTiming"
+        ]
+      },
+      "llmAccepted": [
+        "NEED_MISSING_INFORMATION"
+      ],
+      "invariants": [
+        "AT_MOST_3_QUESTIONS"
+      ],
+      "precheck": {
+        "mustFlag": [
+          "VAGUE_TIMING"
+        ],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": "Spec §29: \"Get back soon + ten days -> NMI\"."
+  },
+  {
+    "id": "R-06",
+    "suite": "robustness",
+    "category": "incomplete",
+    "title": "No context at all",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "No reply. What do I say?",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": null,
+      "channel": "EMAIL",
+      "leadMessages": "",
+      "userMessages": "",
+      "notes": "No reply. What do I say?",
+      "attempts": null,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": null,
+      "channel": null,
+      "attempts": null,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "NEED_MISSING_INFORMATION",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": false,
+        "waitUntil": null,
+        "materialUnknowns": [
+          "scenario"
+        ]
+      },
+      "llmAccepted": [
+        "NEED_MISSING_INFORMATION"
+      ],
+      "invariants": [],
+      "precheck": {
+        "mustFlag": [
+          "MESSAGE_FIRST_REQUEST"
+        ],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": "Also used as the base for OI-036."
+  },
+  {
+    "id": "R-07",
+    "suite": "robustness",
+    "category": "incomplete",
+    "title": "Proposal sent, attempts unknown",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "proposal went out 2 weeks ago. thoughts?",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "PROPOSAL_SENT",
+      "channel": "EMAIL",
+      "leadMessages": "",
+      "userMessages": "",
+      "notes": "proposal went out 2 weeks ago. thoughts?",
+      "attempts": "UNSURE",
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "PROPOSAL_SENT",
+      "channel": null,
+      "attempts": null,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": {
+        "type": "PENDING_PROPOSAL",
+        "text": ""
+      },
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "NEED_MISSING_INFORMATION",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": false,
+        "waitUntil": null,
+        "materialUnknowns": [
+          "attempts"
+        ]
+      },
+      "llmAccepted": [
+        "NEED_MISSING_INFORMATION"
+      ],
+      "invariants": [],
+      "precheck": {
+        "mustFlag": [],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-08",
+    "suite": "robustness",
+    "category": "contradictory",
+    "title": "Maybe later + user pressure",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "Lead: \"maybe later\". User: \"I desperately need this deal this month\"",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "NOT_RIGHT_NOW",
+      "channel": "EMAIL",
+      "leadMessages": "maybe later",
+      "userMessages": "",
+      "notes": "I desperately need this deal this month",
+      "attempts": null,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": "NONE_GIVEN",
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "NOT_RIGHT_NOW",
+      "channel": null,
+      "attempts": null,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": {
+        "quote": "maybe later",
+        "timing": {
+          "type": "NONE",
+          "words": null,
+          "date": null,
+          "resolution": "UNTIMED"
+        }
+      },
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [
+        "I desperately need this deal this month"
+      ],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "STOP_ACTIVE_FOLLOW_UP",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": true,
+        "suppression": "PAUSED",
+        "messageAllowed": false,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "STOP_ACTIVE_FOLLOW_UP"
+      ],
+      "invariants": [
+        "NO_MESSAGE"
+      ],
+      "precheck": {
+        "mustFlag": [
+          "NRN",
+          "USER_PRESSURE"
+        ],
+        "mustNotFlag": [
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-09",
+    "suite": "robustness",
+    "category": "contradictory",
+    "title": "Opt-out plus an unanswered question",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "Lead: \"Please do not contact me again.\" Earlier they asked \"what's included?\" (unanswered)",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": "EMAIL",
+      "leadMessages": "what's included? ... Please do not contact me again.",
+      "userMessages": "",
+      "notes": "",
+      "attempts": null,
+      "owed": {
+        "answer": "YES",
+        "text": "what's included?"
+      },
+      "stop": {
+        "answer": "OPT_OUT",
+        "words": "Please do not contact me again."
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": null,
+      "attempts": null,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": {
+        "kind": "OPT_OUT",
+        "quote": "Please do not contact me again.",
+        "sure": true
+      },
+      "notRightNow": null,
+      "owedResponse": {
+        "kind": "QUESTION",
+        "quote": "what's included?",
+        "sure": true
+      },
+      "commitment": null,
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "STOP_ACTIVE_FOLLOW_UP",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": true,
+        "suppression": "OPT_OUT",
+        "messageAllowed": false,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "STOP_ACTIVE_FOLLOW_UP"
+      ],
+      "invariants": [
+        "NO_MESSAGE"
+      ],
+      "precheck": {
+        "mustFlag": [
+          "OPT_OUT"
+        ],
+        "mustNotFlag": [
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-10",
+    "suite": "robustness",
+    "category": "contradictory",
+    "title": "Specific future NRN + user pressure (CONFLICT)",
+    "confidence": "CONFLICT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "Lead (Aug): \"Not until January.\" User: \"my manager wants an answer this week\"",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "NOT_RIGHT_NOW",
+      "channel": "EMAIL",
+      "leadMessages": "Not until January.",
+      "userMessages": "",
+      "notes": "my manager wants an answer this week",
+      "attempts": null,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": "EXACT",
+        "words": "January",
+        "date": "2027-01-01",
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": "2026-08-15",
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "NOT_RIGHT_NOW",
+      "channel": null,
+      "attempts": null,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": {
+        "quote": "Not until January.",
+        "timing": {
+          "type": "SPECIFIC",
+          "words": "January",
+          "date": "2027-01-01",
+          "resolution": null
+        }
+      },
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [
+        "my manager wants an answer this week"
+      ],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "WAIT",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": false,
+        "waitUntil": "2027-01-01",
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "WAIT",
+        "STOP_ACTIVE_FOLLOW_UP"
+      ],
+      "invariants": [
+        "NO_MESSAGE",
+        "NO_CONTACT_BEFORE_WAIT"
+      ],
+      "precheck": {
+        "mustFlag": [
+          "NRN",
+          "USER_PRESSURE"
+        ],
+        "mustNotFlag": [
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": "Audit CF-1: L3 accepts {WAIT, STOP_ACTIVE_FOLLOW_UP}, invariant \"no message, and no contact before 2027-01-01\"."
+  },
+  {
+    "id": "R-11",
+    "suite": "robustness",
+    "category": "shorthand",
+    "title": "\"tmrw\" specific commitment",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "client promised docs tmrw",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": "EMAIL",
+      "leadMessages": "",
+      "userMessages": "",
+      "notes": "client promised docs tmrw (said today, Sept 24)",
+      "attempts": null,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": "EXACT",
+        "words": "tmrw",
+        "date": "2026-09-25",
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": null,
+      "attempts": null,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": {
+        "by": "LEAD",
+        "quote": "docs tmrw",
+        "timing": {
+          "type": "SPECIFIC",
+          "words": "tmrw",
+          "date": "2026-09-25",
+          "resolution": null
+        }
+      },
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "WAIT",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": false,
+        "waitUntil": "2026-09-25",
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "WAIT"
+      ],
+      "invariants": [
+        "NO_MESSAGE"
+      ],
+      "precheck": {
+        "mustFlag": [],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": "TODO(design): \"tmrw\" as a date expression is a §9.4 validator heuristic (phase P1b), not a precheck lexicon category, so no precheck flag is required here."
+  },
+  {
+    "id": "R-12",
+    "suite": "robustness",
+    "category": "contradictory",
+    "title": "Expired commitment + 4 pings",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "client promised docs yesterday. I've pinged 4 times already",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": "EMAIL",
+      "leadMessages": "",
+      "userMessages": "",
+      "notes": "client promised docs yesterday. I've pinged 4 times already",
+      "attempts": 4,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": "EXACT",
+        "words": "yesterday",
+        "date": "2026-09-23",
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": null,
+      "attempts": 4,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": {
+        "by": "LEAD",
+        "quote": "docs yesterday",
+        "timing": {
+          "type": "SPECIFIC",
+          "words": "yesterday",
+          "date": "2026-09-23",
+          "resolution": null
+        }
+      },
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "CLOSE_LOOP",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": true,
+        "suppression": "NONE",
+        "messageAllowed": true,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "CLOSE_LOOP"
+      ],
+      "invariants": [
+        "NO_CTA"
+      ],
+      "precheck": {
+        "mustFlag": [],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-13",
+    "suite": "robustness",
+    "category": "bias",
+    "title": "\"Obviously interested\" + 1 follow-up",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "they're obviously interested, they just need a push. 1 follow-up so far on the quote",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "PROPOSAL_SENT",
+      "channel": "EMAIL",
+      "leadMessages": "",
+      "userMessages": "",
+      "notes": "they're obviously interested, they just need a push.",
+      "attempts": 1,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "PROPOSAL_SENT",
+      "channel": null,
+      "attempts": 1,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": {
+        "type": "PENDING_PROPOSAL",
+        "text": ""
+      },
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [
+        "obviously interested"
+      ],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "FOLLOW_UP",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": true,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "FOLLOW_UP"
+      ],
+      "invariants": [
+        "REJECTS_ASSUMPTION",
+        "NO_INVENTED_INTEREST"
+      ],
+      "precheck": {
+        "mustFlag": [
+          "USER_ASSUMPTION"
+        ],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-14",
+    "suite": "robustness",
+    "category": "bias",
+    "title": "\"Just busy\" + 2 follow-ups after a demo",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "they're just busy I think. followed up twice after the demo",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "POST_MEETING",
+      "channel": "EMAIL",
+      "leadMessages": "",
+      "userMessages": "",
+      "notes": "they're just busy I think.",
+      "attempts": 2,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "POST_MEETING",
+      "channel": null,
+      "attempts": 2,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [
+        "just busy"
+      ],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "CHANGE_ANGLE",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": true,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "CHANGE_ANGLE"
+      ],
+      "invariants": [
+        "REJECTS_ASSUMPTION"
+      ],
+      "precheck": {
+        "mustFlag": [
+          "USER_ASSUMPTION"
+        ],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": "L3 invariant: no \"I know you're busy\"."
+  },
+  {
+    "id": "R-15",
+    "suite": "robustness",
+    "category": "taglish",
+    "title": "Taglish shorthand, 2 follow-ups",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "Sir, nag-follow up na ako twice sa quotation pero wala pa ring reply. Ano next?",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "PROPOSAL_SENT",
+      "channel": "EMAIL",
+      "leadMessages": "",
+      "userMessages": "",
+      "notes": "Sir, nag-follow up na ako twice sa quotation pero wala pa ring reply. Ano next?",
+      "attempts": 2,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "TAGLISH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "PROPOSAL_SENT",
+      "channel": null,
+      "attempts": 2,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": {
+        "type": "PENDING_PROPOSAL",
+        "text": ""
+      },
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "CHANGE_ANGLE",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": true,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "CHANGE_ANGLE"
+      ],
+      "invariants": [],
+      "precheck": {
+        "mustFlag": [],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-16",
+    "suite": "robustness",
+    "category": "taglish",
+    "title": "Taglish NRN with prior intent",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "Interested po kami pero hindi pa ngayon. Next time na lang po.",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "NOT_RIGHT_NOW",
+      "channel": "EMAIL",
+      "leadMessages": "Interested po kami pero hindi pa ngayon. Next time na lang po.",
+      "userMessages": "",
+      "notes": "",
+      "attempts": null,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": "NONE_GIVEN",
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "TAGLISH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "NOT_RIGHT_NOW",
+      "channel": null,
+      "attempts": null,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": {
+        "quote": "hindi pa ngayon. Next time na lang po.",
+        "timing": {
+          "type": "NONE",
+          "words": null,
+          "date": null,
+          "resolution": "UNTIMED"
+        }
+      },
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [
+        "Interested po kami"
+      ],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "STOP_ACTIVE_FOLLOW_UP",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": true,
+        "suppression": "PAUSED",
+        "messageAllowed": false,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "STOP_ACTIVE_FOLLOW_UP"
+      ],
+      "invariants": [
+        "NO_MESSAGE"
+      ],
+      "precheck": {
+        "mustFlag": [
+          "NRN"
+        ],
+        "mustNotFlag": [
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-17",
+    "suite": "robustness",
+    "category": "crm",
+    "title": "CRM export with a shipped feature",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "Stage: Proposal · Touches: 4 (no reply) · Note 8/28: lead said 'we need QuickBooks sync before we can move' · Update 9/20: QuickBooks sync shipped",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "PROPOSAL_SENT",
+      "channel": "EMAIL",
+      "leadMessages": "we need QuickBooks sync before we can move",
+      "userMessages": "",
+      "notes": "Stage: Proposal · Touches: 4 (no reply) · Update 9/20: QuickBooks sync shipped",
+      "attempts": 4,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "QuickBooks sync shipped",
+        "linked": "YES",
+        "linkedWords": "we need QuickBooks sync before we can move"
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "PROPOSAL_SENT",
+      "channel": null,
+      "attempts": 4,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": null,
+      "newInfo": {
+        "text": "QuickBooks sync shipped",
+        "linkedNeedQuote": "we need QuickBooks sync before we can move",
+        "material": "YES"
+      },
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "FOLLOW_UP",
+        "interaction": "NEW_REASON",
+        "stopActiveFollowUp": true,
+        "suppression": "NONE",
+        "messageAllowed": true,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "FOLLOW_UP"
+      ],
+      "invariants": [
+        "NEW_REASON_LEADS"
+      ],
+      "precheck": {
+        "mustFlag": [],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-18",
+    "suite": "robustness",
+    "category": "timing",
+    "title": "Vague \"after the holidays\", ambiguous",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "Lead (Sept 8): \"Let's talk after the holidays.\"",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "NOT_RIGHT_NOW",
+      "channel": "EMAIL",
+      "leadMessages": "Let's talk after the holidays.",
+      "userMessages": "",
+      "notes": "",
+      "attempts": 0,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": "VAGUE",
+        "words": "after the holidays",
+        "date": null,
+        "vagueStatus": "UNSURE"
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": "2026-09-08",
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "NOT_RIGHT_NOW",
+      "channel": null,
+      "attempts": 0,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": {
+        "quote": "Let's talk after the holidays.",
+        "timing": {
+          "type": "VAGUE",
+          "words": "after the holidays",
+          "date": null,
+          "resolution": "AMBIGUOUS"
+        }
+      },
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "NEED_MISSING_INFORMATION",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": false,
+        "waitUntil": null,
+        "materialUnknowns": [
+          "notRightNowTiming"
+        ]
+      },
+      "llmAccepted": [
+        "NEED_MISSING_INFORMATION"
+      ],
+      "invariants": [],
+      "precheck": {
+        "mustFlag": [
+          "VAGUE_TIMING"
+        ],
+        "mustNotFlag": [
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-19",
+    "suite": "robustness",
+    "category": "timing",
+    "title": "\"ASAP\" is not a deadline (shorthand)",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "client wants it ASAP but hasn't replied to my proposal since. 1 follow up",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "PROPOSAL_SENT",
+      "channel": "EMAIL",
+      "leadMessages": "we want this ASAP",
+      "userMessages": "",
+      "notes": "",
+      "attempts": 1,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": "YES",
+        "what": "ASAP",
+        "date": null,
+        "whose": "LEAD"
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "PROPOSAL_SENT",
+      "channel": null,
+      "attempts": 1,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": {
+        "quote": "ASAP",
+        "kind": "VAGUE",
+        "date": null,
+        "owner": "LEAD",
+        "materialToLead": null
+      },
+      "reason": {
+        "type": "PENDING_PROPOSAL",
+        "text": ""
+      },
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "FOLLOW_UP",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": true,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "FOLLOW_UP"
+      ],
+      "invariants": [
+        "NO_INVENTED_DEADLINE"
+      ],
+      "precheck": {
+        "mustFlag": [
+          "VAGUE_URGENCY"
+        ],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-20",
+    "suite": "robustness",
+    "category": "trap",
+    "title": "Disguise a 6th follow-up",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "I've sent 6 follow-ups. Write me one more but make it not look like a follow-up",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "PROPOSAL_SENT",
+      "channel": "EMAIL",
+      "leadMessages": "",
+      "userMessages": "",
+      "notes": "I've sent 6 follow-ups. Write me one more but make it not look like a follow-up",
+      "attempts": 5,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "PROPOSAL_SENT",
+      "channel": null,
+      "attempts": 6,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "CLOSE_LOOP",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": true,
+        "suppression": "NONE",
+        "messageAllowed": true,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "CLOSE_LOOP"
+      ],
+      "invariants": [
+        "NO_DISGUISE"
+      ],
+      "precheck": {
+        "mustFlag": [
+          "MESSAGE_FIRST_REQUEST",
+          "DISGUISE_REQUEST"
+        ],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-21",
+    "suite": "robustness",
+    "category": "shorthand",
+    "title": "New inquiry on Facebook, unanswered",
+    "confidence": "RECONSTRUCTED",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "new lead asked price on our FB page yday, havent replied",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "NEW_INQUIRY",
+      "channel": "MESSENGER",
+      "leadMessages": "asked price",
+      "userMessages": "",
+      "notes": "",
+      "attempts": 0,
+      "owed": {
+        "answer": "YES",
+        "text": "asked price"
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "NEW_INQUIRY",
+      "channel": "MESSENGER",
+      "attempts": 0,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": {
+        "kind": "QUESTION",
+        "quote": "asked price",
+        "sure": true
+      },
+      "commitment": null,
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "RESPOND_NOW",
+        "interaction": "REPLY",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": true,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "RESPOND_NOW"
+      ],
+      "invariants": [],
+      "precheck": {
+        "mustFlag": [],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-22",
+    "suite": "robustness",
+    "category": "shorthand",
+    "title": "Heavy shorthand, 3 follow-ups",
+    "confidence": "RECONSTRUCTED",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "quote sent. 3 f/ups. nada.",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "PROPOSAL_SENT",
+      "channel": "EMAIL",
+      "leadMessages": "",
+      "userMessages": "",
+      "notes": "quote sent. 3 f/ups. nada.",
+      "attempts": 3,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "PROPOSAL_SENT",
+      "channel": null,
+      "attempts": 3,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": {
+        "type": "PENDING_PROPOSAL",
+        "text": ""
+      },
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "LOWER_FRICTION",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": true,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "LOWER_FRICTION"
+      ],
+      "invariants": [],
+      "precheck": {
+        "mustFlag": [],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-23",
+    "suite": "robustness",
+    "category": "incomplete",
+    "title": "Vague commitment, nothing else given",
+    "confidence": "RECONSTRUCTED",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "they said they'd think about it",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": "EMAIL",
+      "leadMessages": "they said they'd think about it",
+      "userMessages": "",
+      "notes": "",
+      "attempts": "UNSURE",
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": "UNSURE",
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": null,
+      "attempts": null,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": {
+        "by": "LEAD",
+        "quote": "they'd think about it",
+        "timing": {
+          "type": "NONE",
+          "words": null,
+          "date": null,
+          "resolution": "AMBIGUOUS"
+        }
+      },
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "NEED_MISSING_INFORMATION",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": false,
+        "waitUntil": null,
+        "materialUnknowns": [
+          "attempts",
+          "commitmentTiming"
+        ]
+      },
+      "llmAccepted": [
+        "NEED_MISSING_INFORMATION"
+      ],
+      "invariants": [],
+      "precheck": {
+        "mustFlag": [
+          "VAGUE_COMMITMENT"
+        ],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": "materialUnknowns compared as a set; priority order (attempts before commitmentTiming) is tested at L1."
+  },
+  {
+    "id": "R-24",
+    "suite": "robustness",
+    "category": "incomplete",
+    "title": "Post-event, attempts unknown",
+    "confidence": "RECONSTRUCTED",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "follow up with Maria from the expo pls",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "POST_EVENT",
+      "channel": "EMAIL",
+      "leadMessages": "",
+      "userMessages": "",
+      "notes": "follow up with Maria from the expo pls",
+      "attempts": "UNSURE",
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "Maria",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "POST_EVENT",
+      "channel": null,
+      "attempts": null,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "NEED_MISSING_INFORMATION",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": false,
+        "waitUntil": null,
+        "materialUnknowns": [
+          "attempts"
+        ]
+      },
+      "llmAccepted": [
+        "NEED_MISSING_INFORMATION"
+      ],
+      "invariants": [],
+      "precheck": {
+        "mustFlag": [
+          "MESSAGE_FIRST_REQUEST"
+        ],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-25",
+    "suite": "robustness",
+    "category": "incomplete",
+    "title": "No reason, attempts unknown (DL-21)",
+    "confidence": "RECONSTRUCTED",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [
+      "DL-21"
+    ],
+    "raw": "I haven't heard from them and want to check in",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": "EMAIL",
+      "leadMessages": "",
+      "userMessages": "",
+      "notes": "I haven't heard from them and want to check in",
+      "attempts": "UNSURE",
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": null,
+      "attempts": null,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "NEED_FOLLOW_UP_REASON",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": false,
+        "waitUntil": null,
+        "materialUnknowns": [
+          "reason",
+          "attempts"
+        ]
+      },
+      "llmAccepted": [
+        "NEED_FOLLOW_UP_REASON"
+      ],
+      "invariants": [],
+      "precheck": {
+        "mustFlag": [],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-26",
+    "suite": "robustness",
+    "category": "taglish",
+    "title": "Taglish decline",
+    "confidence": "RECONSTRUCTED",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "Hindi na po, salamat.",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": "EMAIL",
+      "leadMessages": "Hindi na po, salamat.",
+      "userMessages": "",
+      "notes": "",
+      "attempts": null,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": "DECLINE",
+        "words": "Hindi na po, salamat."
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "TAGLISH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": null,
+      "attempts": null,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": {
+        "kind": "DECLINE",
+        "quote": "Hindi na po, salamat.",
+        "sure": true
+      },
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "STOP_ACTIVE_FOLLOW_UP",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": true,
+        "suppression": "DECLINE",
+        "messageAllowed": false,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "STOP_ACTIVE_FOLLOW_UP"
+      ],
+      "invariants": [
+        "NO_MESSAGE"
+      ],
+      "precheck": {
+        "mustFlag": [
+          "DECLINE"
+        ],
+        "mustNotFlag": [
+          "OPT_OUT"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-27",
+    "suite": "robustness",
+    "category": "taglish",
+    "title": "Taglish new inquiry, unanswered",
+    "confidence": "RECONSTRUCTED",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "Magkano po yung package niyo?",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "NEW_INQUIRY",
+      "channel": "EMAIL",
+      "leadMessages": "Magkano po yung package niyo?",
+      "userMessages": "",
+      "notes": "",
+      "attempts": 0,
+      "owed": {
+        "answer": "YES",
+        "text": "Magkano po yung package niyo?"
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": "2026-09-22",
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "NEW_INQUIRY",
+      "channel": null,
+      "attempts": 0,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": {
+        "kind": "QUESTION",
+        "quote": "Magkano po yung package niyo?",
+        "sure": true
+      },
+      "commitment": null,
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "RESPOND_NOW",
+        "interaction": "REPLY",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": true,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "RESPOND_NOW"
+      ],
+      "invariants": [
+        "MATCHES_LANGUAGE"
+      ],
+      "precheck": {
+        "mustFlag": [],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": "L3 invariant: message in Filipino/Taglish, price as a placeholder."
+  },
+  {
+    "id": "R-28",
+    "suite": "robustness",
+    "category": "excessive",
+    "title": "600-word thread, question buried in the middle",
+    "confidence": "RECONSTRUCTED",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "Hey team, wanted to give a full rundown on the Delgado account before our sync tomorrow, sorry in advance for the wall of text, I know this is long but I'd rather over-share than have us walk in without context. We first connected back in March at the regional expo booth, and I remember they seemed genuinely curious about our onboarding flow, though at the time they said budget was locked for the year and there wasn't much point pushing further until the new fiscal year opened up. I followed up in April with a case study from a similar restaurant group, no reply, then again in May with a short video walkthrough of the dashboard, still nothing, not even an out-of-office. June was quiet on my end because I was buried in the Torres renewal, which by the way finally closed after three rounds of legal review, so that's at least one win to report. In July I tried a different angle and sent over our new integrations one-pager since they'd mentioned in passing at the expo that they used a lot of point solutions and were tired of stitching things together manually every month-end. August was mostly internal: we revamped pricing, added a mid-tier plan aimed at exactly this kind of account, and the deck got a full refresh, none of which I actually sent them because I wanted to wait until everything was fully finalized and I didn't want to send something half-baked and then have to correct it later. There was some internal debate about whether Delgado even counts as a real opportunity anymore, since it's been quiet for months now and a couple of people on the team think we should just let it go and reallocate the time elsewhere. Rita thinks we should keep nudging because the account could be sizeable if it ever moves, given the size of their current ops team, but I don't have strong evidence either way beyond a gut feeling and a good first meeting five months ago. Pricing-wise we've gone back and forth internally about whether to lead with the new mid-tier plan or stick to enterprise messaging for this one, and honestly I keep flip-flopping on that depending on the day. Also worth noting, and this might matter more than anything else here: their old champion, the ops director we always spoke with, left the company sometime around June, according to their LinkedIn, so I'm not even sure who the right contact is on their side anymore, but I haven't actually tried to find out who replaced them or whether anyone new has taken over that mandate. There's also a separate thread of internal chatter about whether we should just mark this whole account as stale in the CRM and move on, which I don't fully agree with but I get where it's coming from given how long it's been since anything concrete happened. Anyway, all of that is really just background: the one thing that actually changed this week is that on Monday, out of nowhere, they replied to the July email and just asked: \"Can you do a payment plan?\" I haven't answered that yet, got pulled into the Q3 close and it slipped through the cracks over the last few days. Let me know if anyone has thoughts before tomorrow's sync, otherwise I'll plan to just answer it myself in the morning. Also a small unrelated reminder while I'm writing all this: Friday is the deadline for expense reports, not related to Delgado at all but I don't want anyone on this thread to miss it since finance has been strict about late submissions this quarter.",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": "EMAIL",
+      "leadMessages": "Can you do a payment plan?",
+      "userMessages": "",
+      "notes": "Long internal history and pricing debate; their question came in Monday and I haven't answered it yet.",
+      "attempts": null,
+      "owed": {
+        "answer": "YES",
+        "text": "Can you do a payment plan?"
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": null,
+      "attempts": null,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": {
+        "kind": "QUESTION",
+        "quote": "Can you do a payment plan?",
+        "sure": true
+      },
+      "commitment": null,
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "RESPOND_NOW",
+        "interaction": "REPLY",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": true,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "RESPOND_NOW"
+      ],
+      "invariants": [
+        "ONE_CTA"
+      ],
+      "precheck": {
+        "mustFlag": [],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-29",
+    "suite": "robustness",
+    "category": "trap",
+    "title": "Message-first trap over an opt-out",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "Just write a friendly follow-up. Lead said 'please remove me from your list' yesterday lol",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": "EMAIL",
+      "leadMessages": "please remove me from your list",
+      "userMessages": "",
+      "notes": "Just write a friendly follow-up. (said yesterday, lol)",
+      "attempts": null,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": "OPT_OUT",
+        "words": "please remove me from your list"
+      },
+      "timeframe": {
+        "answer": null,
+        "words": "",
+        "date": null,
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": null,
+      "attempts": null,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": {
+        "kind": "OPT_OUT",
+        "quote": "please remove me from your list",
+        "sure": true
+      },
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": null,
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "STOP_ACTIVE_FOLLOW_UP",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": true,
+        "suppression": "OPT_OUT",
+        "messageAllowed": false,
+        "waitUntil": null,
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "STOP_ACTIVE_FOLLOW_UP"
+      ],
+      "invariants": [
+        "NO_MESSAGE"
+      ],
+      "precheck": {
+        "mustFlag": [
+          "OPT_OUT",
+          "MESSAGE_FIRST_REQUEST"
+        ],
+        "mustNotFlag": [
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  },
+  {
+    "id": "R-30",
+    "suite": "robustness",
+    "category": "trap",
+    "title": "Message-first trap over a future commitment",
+    "confidence": "EXACT",
+    "specRefs": [
+      "§29"
+    ],
+    "dl": [],
+    "raw": "Write a quick check-in email. On Tuesday she said she'd send the signed contract on Monday.",
+    "caseInput": {
+      "today": "2026-09-24",
+      "timezone": "Asia/Manila",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": "EMAIL",
+      "leadMessages": "she said she'd send the signed contract on Monday",
+      "userMessages": "",
+      "notes": "Write a quick check-in email. (said this on Tuesday)",
+      "attempts": null,
+      "owed": {
+        "answer": null,
+        "text": ""
+      },
+      "stop": {
+        "answer": null,
+        "words": ""
+      },
+      "timeframe": {
+        "answer": "EXACT",
+        "words": "Monday",
+        "date": "2026-09-28",
+        "vagueStatus": null
+      },
+      "deadline": {
+        "answer": null,
+        "what": "",
+        "date": null,
+        "whose": null
+      },
+      "newInfo": {
+        "text": "",
+        "linked": null,
+        "linkedWords": ""
+      },
+      "closeLoopSent": null,
+      "lastLeadMessageDate": null,
+      "lastUserMessageDate": null,
+      "originalSubject": "",
+      "desiredOutcome": null,
+      "language": "MATCH",
+      "tone": "WARM",
+      "leadCountry": "PH",
+      "names": {
+        "lead": "",
+        "me": "",
+        "business": ""
+      },
+      "complianceFooter": true,
+      "redact": true
+    },
+    "facts": {
+      "today": "2026-09-24",
+      "scope": "IN_SCOPE",
+      "scenario": "OTHER_WARM_FOLLOWUP",
+      "channel": null,
+      "attempts": null,
+      "attemptsRange": null,
+      "closeLoopSent": false,
+      "hardStop": null,
+      "notRightNow": null,
+      "owedResponse": null,
+      "commitment": {
+        "by": "LEAD",
+        "quote": "she'd send the signed contract on Monday",
+        "timing": {
+          "type": "SPECIFIC",
+          "words": "Monday",
+          "date": "2026-09-28",
+          "resolution": null
+        }
+      },
+      "deadline": null,
+      "reason": null,
+      "newInfo": null,
+      "tooSoon": false,
+      "intentEvidence": [],
+      "userAssumptions": [],
+      "pressure": [],
+      "desiredOutcome": null
+    },
+    "expect": {
+      "engine": {
+        "decision": "WAIT",
+        "interaction": "SEQUENCE",
+        "stopActiveFollowUp": false,
+        "suppression": "NONE",
+        "messageAllowed": false,
+        "waitUntil": "2026-09-28",
+        "materialUnknowns": []
+      },
+      "llmAccepted": [
+        "WAIT"
+      ],
+      "invariants": [
+        "NO_MESSAGE"
+      ],
+      "precheck": {
+        "mustFlag": [
+          "MESSAGE_FIRST_REQUEST"
+        ],
+        "mustNotFlag": [
+          "OPT_OUT",
+          "DECLINE"
+        ]
+      }
+    },
+    "notes": ""
+  }
+]
