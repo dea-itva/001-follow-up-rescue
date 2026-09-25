@@ -548,6 +548,14 @@ export const LEXICON: LexiconEntry[] = [
     "Guilt-trip phrasing.",
   ),
   e("guilt.left_me_on_read", "left me on read", "GUILT", "en", "warning", "Guilt-trip / read-receipt phrasing."),
+  raw(
+    "guilt.you_missed_your_deadline",
+    /\byou\s+missed\s+(your|the)\s+deadline\b/iu,
+    "GUILT",
+    "en",
+    "warning",
+    "Blames the lead for an expired commitment, instead of stating it neutrally (design §9.2 E_GUILT, OI-020).",
+  ),
   e("guilt.i_saw_you_read", "i saw you read", "GUILT", "en", "warning", "Read-receipt guilt."),
   e("guilt.nag_seen_ka_lang", "nag-seen ka lang", "GUILT", "taglish", "warning", "\"You just left me on seen.\""),
   e(
@@ -686,6 +694,14 @@ export const LEXICON: LexiconEntry[] = [
     "error",
     "Tracking-based guilt.",
   ),
+  e(
+    "presumption.you_were_so_excited",
+    "you were so excited",
+    "PRESUMPTION",
+    "en",
+    "error",
+    "Invented interest not stated by the lead (e.g. \"since you were so excited about the proposal\").",
+  ),
 
   // ASSUMED_OBJECTION
   e(
@@ -715,6 +731,14 @@ export const LEXICON: LexiconEntry[] = [
     "en",
     "error",
     "Reopens the chase.",
+  ),
+  raw(
+    "disguised_restart.ill_check_back",
+    /\bi(?:'ll| will)\s+check\s+back\b/iu,
+    "DISGUISED_RESTART",
+    "en",
+    "error",
+    "Promises future contact by the user (breaks the close) — a CLOSE_LOOP message must not restart the sequence.",
   ),
   e("disguised_restart.before_i_go", "before i go", "DISGUISED_RESTART", "en", "error", "Reopens the chase."),
   e("disguised_restart.one_last_thing", "one last thing", "DISGUISED_RESTART", "en", "error", "Reopens the chase."),
@@ -747,4 +771,15 @@ export const LEXICON: LexiconEntry[] = [
   e("attribution.as_we_discussed", "as we discussed", "ATTRIBUTION", "en", "error", "Invented prior conversation."),
   e("attribution.per_our_call", "per our call", "ATTRIBUTION", "en", "error", "Invented prior conversation."),
   e("attribution.like_you_mentioned", "like you mentioned", "ATTRIBUTION", "en", "error", "Invented prior conversation."),
+  raw(
+    "attribution.you_promised",
+    /\byou\s+promised\b/iu,
+    "ATTRIBUTION",
+    "en",
+    "error",
+    "Attributes a specific promise to the lead; state what they said neutrally instead (design §9.2 E_UNSUPPORTED_ATTRIBUTION, OI-020).",
+  ),
+  raw("attribution.you_said", /\byou\s+said\b/iu, "ATTRIBUTION", "en", "error", "Attributes specific words to the lead."),
+  raw("attribution.you_mentioned", /\byou\s+mentioned\b/iu, "ATTRIBUTION", "en", "error", "Attributes specific words to the lead."),
+  raw("attribution.you_told_me", /\byou\s+told\s+me\b/iu, "ATTRIBUTION", "en", "error", "Attributes specific words to the lead."),
 ];

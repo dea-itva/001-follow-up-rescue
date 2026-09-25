@@ -40,7 +40,8 @@ export const DEFAULT_POLICY: Policy = { newReasonReopensPause: true };
 // §8.1 Per-decision invariants
 // ---------------------------------------------------------------------------
 
-function baseMessageAllowed(decision: Decision): boolean {
+/** Exported for `src/validate.ts`, which checks the invariant table (§8.1) against an AI's own stated decision. */
+export function baseMessageAllowed(decision: Decision): boolean {
   switch (decision) {
     case "RESPOND_NOW":
     case "FOLLOW_UP":
@@ -53,7 +54,8 @@ function baseMessageAllowed(decision: Decision): boolean {
   }
 }
 
-function baseStopActiveFollowUp(decision: Decision): boolean {
+/** Exported for `src/validate.ts` (§8.1's `stopActiveFollowUp` column, for `E_STOP_FLAG`). */
+export function baseStopActiveFollowUp(decision: Decision): boolean {
   switch (decision) {
     case "STOP_ACTIVE_FOLLOW_UP":
     case "CLOSE_LOOP":

@@ -10,6 +10,7 @@
  *    reordering and insertions between two whole *messages*.
  */
 
+import { prepareCaseText } from "./redact.js";
 import { sanitize } from "./sanitize.js";
 import type { ValidationContext } from "./types.js";
 
@@ -179,9 +180,12 @@ export function isGrounded(quote: string, caseText: string): GroundingCheck {
  * case's pasted fields plus the form's own free-text answers (decoded, not
  * JSON-escaped, since this is for comparison, not for building a prompt).
  *
- * Full case-block rendering — matching exactly what the model saw, with
- * redaction and pseudonymization applied — is `buildCaseBlock` (phase P1b,
- * `src/prompt.ts`); this covers grounding for the engine/validator layer.
+ * Full case-block rendering is `buildCaseBlock` (`src/prompt.ts`); this
+ * covers grounding for the engine/validator layer. Redaction and
+ * pseudonymization (design §10.7) are applied here too, via the shared
+ * `prepareCaseText` helper, so that quotes the model saw only in their
+ * redacted/pseudonymized form (e.g. "[LEAD]" instead of a real name) are
+ * still grounded correctly rather than reported as invented.
  */
 export function groundingText(ctx: ValidationContext): string {
   if (ctx.caseInput) {
@@ -198,7 +202,8 @@ export function groundingText(ctx: ValidationContext): string {
       c.newInfo.linkedWords,
       c.originalSubject,
     ];
-    return sanitize(parts.filter((p) => p.trim() !== "").join("\n"));
+    const text = sanitize(parts.filter((p) => p.trim() !== "").join("\n"));
+    return prepareCaseText(text, c);
   }
   if (ctx.raw) return sanitize(ctx.raw);
   return "";

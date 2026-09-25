@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "gen:prompts": "node scripts/gen-prompts.mjs"
   },
   "devDependencies": {
     "typescript": "5.9.3",

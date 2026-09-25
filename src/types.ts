@@ -295,6 +295,7 @@ export interface RescueResult {
 
 export type ViolationCode =
   | "E_SCHEMA"
+  | "W_NO_CHECKER_DATA"
   | "W_VERSION_MISMATCH"
   | "E_CARD_MISMATCH"
   | "E_RULE_MISMATCH"

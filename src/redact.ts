@@ -4,12 +4,14 @@
 
 import type { CaseInput } from "./types.js";
 
-const EMAIL_RE = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
+// Exported for `src/validate.ts`'s `E_INVENTED_LINK` check, which scans a drafted message for
+// contact details not present in the case, reusing exactly the patterns `redact()` itself matches.
+export const EMAIL_RE = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
 
-const URL_RE = /\b(?:https?:\/\/|www\.)[^\s<>"')\]]+/gi;
+export const URL_RE = /\b(?:https?:\/\/|www\.)[^\s<>"')\]]+/gi;
 
 // PH: "+63 917 123 4567", "0917-123-4567". US: "(555) 123-4567", "555-123-4567".
-const PHONE_RE =
+export const PHONE_RE =
   /(\+63[\s-]?\d{2,3}[\s-]?\d{3}[\s-]?\d{3,4})|(\b0\d{3}[\s-]?\d{3}[\s-]?\d{4}\b)|(\(\d{3}\)\s?\d{3}[\s-]?\d{4})|(\b\d{3}[.-]\d{3}[.-]\d{4}\b)/g;
 
 /** Replaces emails with `[email]`, PH/US-style phone numbers with `[phone]`, and URLs with `[link]`. */
@@ -64,5 +66,21 @@ export function restoreNames(text: string, names: CaseInput["names"]): string {
   for (const [name, token] of nameEntries(names)) {
     result = result.split(token).join(name);
   }
+  return result;
+}
+
+/**
+ * Applies a case's own privacy settings to a block of case text, in the
+ * order the Desk applies them before a model ever sees it (design §10.7):
+ * optional contact-detail redaction, then optional name pseudonymization
+ * (only when at least one name was given). Shared by `buildCaseBlock`
+ * (`src/prompt.ts`) and `groundingText` (`src/grounding.ts`) so that
+ * grounding always checks quotes against exactly what the model saw.
+ */
+export function prepareCaseText(text: string, input: Pick<CaseInput, "redact" | "names">): string {
+  let result = text;
+  if (input.redact) result = redact(result);
+  const hasNames = input.names.lead.trim() !== "" || input.names.me.trim() !== "" || input.names.business.trim() !== "";
+  if (hasNames) result = pseudonymize(result, input.names);
   return result;
 }
