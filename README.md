@@ -45,9 +45,9 @@ product spec it was built from is `docs/spec/RECOVERED_SPEC.md`.
 2. Or, if you're signed in to Claude, open the published Claude version —
    the same tool with one added button:
 
-   **`CLAUDE_ARTIFACT_LINK`** *(placeholder — the person sharing this repo
-   fills in the real link here once the Rescue Desk is published as a
-   Claude artifact)*
+   **https://claude.ai/artifact/SyqhsyMCehjBJMFmiKa6uH** (private until its
+   owner shares it from the page's Share menu; each viewer's usage counts
+   against their own Claude plan, and the first run asks permission).
 
 3. Fill in the short form about your lead. A provisional decision appears on
    the right as you type — that's the deterministic engine, running with no
