@@ -137,8 +137,9 @@ export const LEXICON: LexiconEntry[] = [
   // ---------------------------------------------------------------------
   raw(
     "decline.bare_no",
-    // A standalone "no" that is not the start of "No problem" / "No worries" / "Not …".
-    /\bno\b(?!\s*(problem|worries|prob\b|biggie|,?\s*that'?s (fine|ok(ay)?)))/iu,
+    // A bare "No." standing alone as a sentence ("No.", "No thanks.", "No po."), or "no, thank you".
+    // Not "no rush", "no idea", "No problem", "No worries" (DL-03: a weak, flag-only signal).
+    /(?:^|[\n.!?]\s*)no(?:,?\s+(?:thanks?|thank\s+you|po|salamat))?\s*[.!]*\s*(?=$|\n)|\bno,?\s+thank(?:s|\s+you)\b/imu,
     "DECLINE",
     "en",
     "warning",
@@ -581,7 +582,15 @@ export const LEXICON: LexiconEntry[] = [
     "error",
     "Manufactured urgency.",
   ),
-  e("fake_urgency.hurry", "hurry", "FAKE_URGENCY", "en", "error", "Manufactured urgency."),
+  raw(
+    "fake_urgency.hurry",
+    // "Hurry" as pressure; not the courteous "no hurry", "no need to hurry", "don't hurry", "not in a hurry".
+    /(?<!\b(?:no|don'?t|not in a|no need to)\s+)\bhurry\b/iu,
+    "FAKE_URGENCY",
+    "en",
+    "error",
+    "Manufactured urgency.",
+  ),
   e("fake_urgency.today_only", "today only", "FAKE_URGENCY", "en", "error", "Manufactured urgency."),
   e("fake_urgency.limited_time", "limited time", "FAKE_URGENCY", "en", "error", "Manufactured urgency."),
 

@@ -344,3 +344,87 @@ describe("checkAnswer (design §9.2a)", () => {
     expect(report.status).toBe("UNPARSEABLE");
   });
 });
+
+// ---------------------------------------------------------------------------
+// False-positive guards found in lead review. Each one would have wrongly failed
+// a good AI answer.
+// ---------------------------------------------------------------------------
+
+describe("false-positive guards (lead review)", () => {
+  it("a grounded 'you mentioned …' is fine; an invented one is still an error", () => {
+    const ctx = baseCtx({ leadMessages: "We need Xero integration before we can move forward." });
+    const grounded = goodJson({
+      message: {
+        channel: "EMAIL",
+        subject: null,
+        body:
+          "Hi Ana,\n\nYou mentioned you need Xero integration before you can move forward. Would a quick demo on Tuesday or Wednesday help?\n\nBest,\n[Your name]",
+      },
+      cta: { text: "Would a quick demo on Tuesday or Wednesday help?", type: "CHOOSE_ONE" },
+    });
+    expect(codesOf(validate(parsed(grounded), ctx))).not.toContain("E_UNSUPPORTED_ATTRIBUTION");
+
+    const invented = goodJson({
+      message: {
+        channel: "EMAIL",
+        subject: null,
+        body: "Hi Ana,\n\nYou mentioned your board meets next Thursday. Would Tuesday or Wednesday work for a call?\n\nBest,\n[Your name]",
+      },
+    });
+    expect(codesOf(validate(parsed(invented), ctx))).toContain("E_UNSUPPORTED_ATTRIBUTION");
+  });
+
+  it("'you promised' is always flagged (blame framing), even when grounded", () => {
+    const ctx = baseCtx({ leadMessages: "I'll send the documents by Friday." });
+    const json = goodJson({
+      message: { channel: "EMAIL", subject: null, body: "Hi Ana,\n\nYou promised the documents by Friday. Could you send them?\n\nBest,\n[Your name]" },
+      cta: { text: "Could you send them?", type: "SEND_ITEM" },
+    });
+    expect(codesOf(validate(parsed(json), ctx))).toContain("E_UNSUPPORTED_ATTRIBUTION");
+  });
+
+  it("scarcity the user actually supplied is fine; invented scarcity is an error", () => {
+    const supplied = baseCtx({ notes: "True fact: only 2 spots left in the October batch." });
+    const json = goodJson({
+      message: {
+        channel: "EMAIL",
+        subject: null,
+        body: "Hi Ana,\n\nFor planning: there are only 2 spots left in the October batch. Would you like me to hold one?\n\nBest,\n[Your name]",
+      },
+      cta: { text: "Would you like me to hold one?", type: "YES_NO" },
+    });
+    expect(codesOf(validate(parsed(json), supplied))).not.toContain("E_FAKE_SCARCITY");
+    expect(codesOf(validate(parsed(json), baseCtx()))).toContain("E_FAKE_SCARCITY");
+  });
+
+  it("a SCHEDULED send date after a passed vague commitment is not E_TIMING_DATE_UNGROUNDED", () => {
+    const ctx = baseCtx({ leadMessages: "I'll get back to you after the holidays." });
+    const json = goodJson({
+      timing: { mode: "SCHEDULED", date: "2026-09-29", note: "Typical practice: a few business days after your last message." },
+      facts: {
+        ...(goodJson().facts as Record<string, unknown>),
+        attempts: 0,
+        reason: null,
+        commitment: {
+          by: "LEAD",
+          quote: "I'll get back to you after the holidays.",
+          timing: { type: "VAGUE", words: "after the holidays", date: null, resolution: "PASSED" },
+        },
+      },
+    });
+    expect(codesOf(validate(parsed(json), ctx))).not.toContain("E_TIMING_DATE_UNGROUNDED");
+  });
+});
+
+describe("courtesy phrases are not fake urgency (lead review)", () => {
+  it('"No hurry" is fine; "Hurry" is fake urgency', () => {
+    const calm = goodJson({
+      message: { channel: "EMAIL", subject: null, body: "Hi Ana,\n\nNo hurry at all. Would Tuesday or Wednesday work for a quick call?\n\nBest,\n[Your name]" },
+    });
+    expect(codesOf(validate(parsed(calm), baseCtx()))).not.toContain("E_FAKE_URGENCY");
+    const pushy = goodJson({
+      message: { channel: "EMAIL", subject: null, body: "Hi Ana,\n\nHurry, would Tuesday or Wednesday work for a quick call?\n\nBest,\n[Your name]" },
+    });
+    expect(codesOf(validate(parsed(pushy), baseCtx()))).toContain("E_FAKE_URGENCY");
+  });
+});

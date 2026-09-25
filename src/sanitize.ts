@@ -9,8 +9,7 @@
  *  - the Unicode tag block U+E0000–U+E007F
  */
 
-// eslint-disable-next-line no-misleading-character-class -- intentionally matches invisible code points
-const INVISIBLE_RE = /[​-‍⁠﻿‪-‮⁦-⁩]|[\u{E0000}-\u{E007F}]/gu;
+const INVISIBLE_RE = /[\u200B-\u200D\u2060\uFEFF\u202A-\u202E\u2066-\u2069]|[\u{E0000}-\u{E007F}]/gu;
 
 /** Removes invisible/control characters that could hide instructions or break exact-match grounding. */
 export function stripInvisible(text: string): string {
@@ -23,6 +22,6 @@ export function stripInvisible(text: string): string {
  */
 export function sanitize(text: string): string {
   return stripInvisible(text)
-    .replace(/ /g, " ")
+    .replace(/\u00A0/g, " ")
     .replace(/\r\n?/g, "\n");
 }

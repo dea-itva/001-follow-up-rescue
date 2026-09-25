@@ -502,8 +502,33 @@ const TRACKING_EXCLUDE_IDS = new Set([
   "guilt.nag_seen_ka_lang",
 ]);
 
-function checkMessageAntiPatterns(body: string, decision: Decision): Violation[] {
+/**
+ * An attribution ("you mentioned …", "as we discussed …") is grounded when most
+ * of the content words that follow it, up to the end of the sentence, appear in
+ * the case (design §9.2 E_UNSUPPORTED_ATTRIBUTION: flag only when the attributed
+ * content is not in the case). "You promised" is always flagged: it frames an
+ * expired commitment as blame (design §5.7, OI-020).
+ */
+const ALWAYS_FLAG_ATTRIBUTION_IDS = new Set(["attribution.you_promised"]);
+
+function attributionIsGrounded(body: string, matchIndex: number, matchText: string, caseText: string): boolean {
+  if (caseText.trim() === "") return false;
+  const after = body.slice(matchIndex + matchText.length);
+  const sentenceEnd = after.search(/[.!?\n]/);
+  const clause = sentenceEnd === -1 ? after : after.slice(0, sentenceEnd);
+  const words = contentWordsMinLen(clause, 4);
+  if (words.length === 0) return false;
+  const caseWords = new Set(contentWordsMinLen(caseText, 1));
+  const present = words.filter((w) => caseWords.has(w)).length;
+  return present / words.length >= 0.6;
+}
+
+function checkMessageAntiPatterns(body: string, decision: Decision, caseText = ""): Violation[] {
   const violations: Violation[] = [];
+  const normCase = normalize(caseText);
+  /** Urgency or scarcity wording is fine when the user supplied that very fact in the case. */
+  const suppliedByUser = (matched: string | undefined): boolean =>
+    matched !== undefined && normCase !== "" && normCase.includes(normalize(matched));
 
   for (const id of TRACKING_EXCLUDE_IDS) {
     const entry = LEXICON.find((e) => e.id === id);
@@ -516,10 +541,14 @@ function checkMessageAntiPatterns(body: string, decision: Decision): Violation[]
     violations.push(V("E_GUILT", "error", hit.note, "design §9.2 E_GUILT", hit.pattern.exec(body)?.[0]));
   }
   for (const hit of scanCategory(body, "FAKE_URGENCY")) {
-    violations.push(V("E_FAKE_URGENCY", "error", hit.note, "design §9.2 E_FAKE_URGENCY", hit.pattern.exec(body)?.[0]));
+    const matched = hit.pattern.exec(body)?.[0];
+    if (suppliedByUser(matched)) continue;
+    violations.push(V("E_FAKE_URGENCY", "error", hit.note, "design §9.2 E_FAKE_URGENCY", matched));
   }
   for (const hit of scanCategory(body, "FAKE_SCARCITY")) {
-    violations.push(V("E_FAKE_SCARCITY", "error", hit.note, "design §9.2 E_FAKE_SCARCITY", hit.pattern.exec(body)?.[0]));
+    const matched = hit.pattern.exec(body)?.[0];
+    if (suppliedByUser(matched)) continue;
+    violations.push(V("E_FAKE_SCARCITY", "error", hit.note, "design §9.2 E_FAKE_SCARCITY", matched));
   }
   for (const hit of scanCategory(body, "PRESUMPTION", TRACKING_EXCLUDE_IDS)) {
     violations.push(V("E_ASSUMED_LEAD_STATE", "error", hit.note, "design §9.2 E_ASSUMED_LEAD_STATE", hit.pattern.exec(body)?.[0]));
@@ -528,7 +557,11 @@ function checkMessageAntiPatterns(body: string, decision: Decision): Violation[]
     violations.push(V("E_ASSUMED_OBJECTION", "error", hit.note, "design §9.2 E_ASSUMED_OBJECTION", hit.pattern.exec(body)?.[0]));
   }
   for (const hit of scanCategory(body, "ATTRIBUTION")) {
-    violations.push(V("E_UNSUPPORTED_ATTRIBUTION", "error", hit.note, "design §9.2 E_UNSUPPORTED_ATTRIBUTION", hit.pattern.exec(body)?.[0]));
+    const re = new RegExp(hit.pattern.source, hit.pattern.flags.replace("g", ""));
+    const m = re.exec(body);
+    if (!m) continue;
+    if (!ALWAYS_FLAG_ATTRIBUTION_IDS.has(hit.id) && attributionIsGrounded(body, m.index, m[0], caseText)) continue;
+    violations.push(V("E_UNSUPPORTED_ATTRIBUTION", "error", hit.note, "design §9.2 E_UNSUPPORTED_ATTRIBUTION", m[0]));
   }
 
   const vagueHits = scanCategory(body, "VAGUE_CHECKIN");
@@ -680,11 +713,11 @@ export function validate(parsed: ParsedAnswer, ctx: ValidationContext = {}): Val
       }
     }
 
-    // ---- Message anti-patterns (§9.6) ---------------------------------------
-    for (const v of checkMessageAntiPatterns(body, decision)) (v.severity === "error" ? errors : warnings).push(v);
-
     // ---- Invented deadline / numbers / links (§9.4, §9.2) -------------------
     const caseText = groundingText(ctx);
+
+    // ---- Message anti-patterns (§9.6) ---------------------------------------
+    for (const v of checkMessageAntiPatterns(body, decision, caseText)) (v.severity === "error" ? errors : warnings).push(v);
     const deadlineExpr = findDeadlineNearDate(body);
     if (deadlineExpr) {
       const facts = json.facts as Record<string, unknown> | undefined;
@@ -890,10 +923,10 @@ export function validate(parsed: ParsedAnswer, ctx: ValidationContext = {}): Val
     }
 
     // §9.2 E_TIMING_DATE_UNGROUNDED
-    if (safe.timing.date) {
+    if (safe.timing.date && decision === "WAIT") {
       const ref = aiFacts.commitment?.timing ?? aiFacts.notRightNow?.timing ?? null;
       const ungroundedByType = ref !== null && ref.type !== "SPECIFIC";
-      const waitMismatch = decision === "WAIT" && safe.timing.date !== engineResult.waitUntil;
+      const waitMismatch = safe.timing.date !== engineResult.waitUntil;
       if (ungroundedByType || waitMismatch) {
         errors.push(V("E_TIMING_DATE_UNGROUNDED", "error", "`timing.date` is not grounded in a SPECIFIC timing, or disagrees with the engine's `waitUntil`.", "design §9.2 E_TIMING_DATE_UNGROUNDED"));
       }

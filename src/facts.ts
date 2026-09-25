@@ -99,7 +99,10 @@ export function factsFromForm(input: CaseInput): Facts {
           kind: input.deadline.date ? "CONCRETE" : "VAGUE",
           date: input.deadline.date,
           owner: input.deadline.whose === "LEAD" ? "LEAD" : input.deadline.whose === "MINE" ? "USER_INTERNAL" : "EXTERNAL",
-          materialToLead: null,
+          // The lead's own deadline bears on their own goal by definition (design §5.13), so the
+          // Desk doesn't ask "does this matter to them?". An external deadline stays an unknown,
+          // and "only mine" is never material.
+          materialToLead: input.deadline.whose === "LEAD" ? true : input.deadline.whose === "MINE" ? false : null,
         }
       : null;
 

@@ -60,12 +60,12 @@ function weekdayName(date) {
 }
 
 // src/sanitize.ts
-var INVISIBLE_RE = /[​-‍⁠﻿‪-‮⁦-⁩]|[\u{E0000}-\u{E007F}]/gu;
+var INVISIBLE_RE = /[\u200B-\u200D\u2060\uFEFF\u202A-\u202E\u2066-\u2069]|[\u{E0000}-\u{E007F}]/gu;
 function stripInvisible(text) {
   return text.replace(INVISIBLE_RE, "");
 }
 function sanitize(text) {
-  return stripInvisible(text).replace(/ /g, " ").replace(/\r\n?/g, "\n");
+  return stripInvisible(text).replace(/\u00A0/g, " ").replace(/\r\n?/g, "\n");
 }
 
 // src/lexicon.ts
@@ -140,8 +140,9 @@ var LEXICON = [
   // ---------------------------------------------------------------------
   raw(
     "decline.bare_no",
-    // A standalone "no" that is not the start of "No problem" / "No worries" / "Not …".
-    /\bno\b(?!\s*(problem|worries|prob\b|biggie|,?\s*that'?s (fine|ok(ay)?)))/iu,
+    // A bare "No." standing alone as a sentence ("No.", "No thanks.", "No po."), or "no, thank you".
+    // Not "no rush", "no idea", "No problem", "No worries" (DL-03: a weak, flag-only signal).
+    /(?:^|[\n.!?]\s*)no(?:,?\s+(?:thanks?|thank\s+you|po|salamat))?\s*[.!]*\s*(?=$|\n)|\bno,?\s+thank(?:s|\s+you)\b/imu,
     "DECLINE",
     "en",
     "warning",
@@ -569,7 +570,15 @@ var LEXICON = [
     "error",
     "Manufactured urgency."
   ),
-  e("fake_urgency.hurry", "hurry", "FAKE_URGENCY", "en", "error", "Manufactured urgency."),
+  raw(
+    "fake_urgency.hurry",
+    // "Hurry" as pressure; not the courteous "no hurry", "no need to hurry", "don't hurry", "not in a hurry".
+    /(?<!\b(?:no|don'?t|not in a|no need to)\s+)\bhurry\b/iu,
+    "FAKE_URGENCY",
+    "en",
+    "error",
+    "Manufactured urgency."
+  ),
   e("fake_urgency.today_only", "today only", "FAKE_URGENCY", "en", "error", "Manufactured urgency."),
   e("fake_urgency.limited_time", "limited time", "FAKE_URGENCY", "en", "error", "Manufactured urgency."),
   // FAKE_SCARCITY
@@ -871,7 +880,10 @@ function factsFromForm(input) {
     kind: input.deadline.date ? "CONCRETE" : "VAGUE",
     date: input.deadline.date,
     owner: input.deadline.whose === "LEAD" ? "LEAD" : input.deadline.whose === "MINE" ? "USER_INTERNAL" : "EXTERNAL",
-    materialToLead: null
+    // The lead's own deadline bears on their own goal by definition (design §5.13), so the
+    // Desk doesn't ask "does this matter to them?". An external deadline stays an unknown,
+    // and "only mine" is never material.
+    materialToLead: input.deadline.whose === "LEAD" ? true : input.deadline.whose === "MINE" ? false : null
   } : null;
   const newInfoText = input.newInfo.text.trim();
   const newInfo = newInfoText === "" ? null : {
@@ -2381,8 +2393,22 @@ var TRACKING_EXCLUDE_IDS = /* @__PURE__ */ new Set([
   "guilt.left_me_on_read",
   "guilt.nag_seen_ka_lang"
 ]);
-function checkMessageAntiPatterns(body, decision) {
+var ALWAYS_FLAG_ATTRIBUTION_IDS = /* @__PURE__ */ new Set(["attribution.you_promised"]);
+function attributionIsGrounded(body, matchIndex, matchText, caseText) {
+  if (caseText.trim() === "") return false;
+  const after = body.slice(matchIndex + matchText.length);
+  const sentenceEnd = after.search(/[.!?\n]/);
+  const clause = sentenceEnd === -1 ? after : after.slice(0, sentenceEnd);
+  const words = contentWordsMinLen(clause, 4);
+  if (words.length === 0) return false;
+  const caseWords = new Set(contentWordsMinLen(caseText, 1));
+  const present = words.filter((w) => caseWords.has(w)).length;
+  return present / words.length >= 0.6;
+}
+function checkMessageAntiPatterns(body, decision, caseText = "") {
   const violations = [];
+  const normCase = normalize(caseText);
+  const suppliedByUser = (matched) => matched !== void 0 && normCase !== "" && normCase.includes(normalize(matched));
   for (const id of TRACKING_EXCLUDE_IDS) {
     const entry = LEXICON.find((e2) => e2.id === id);
     if (entry && entry.pattern.test(body)) {
@@ -2393,10 +2419,14 @@ function checkMessageAntiPatterns(body, decision) {
     violations.push(V("E_GUILT", "error", hit.note, "design \xA79.2 E_GUILT", hit.pattern.exec(body)?.[0]));
   }
   for (const hit of scanCategory(body, "FAKE_URGENCY")) {
-    violations.push(V("E_FAKE_URGENCY", "error", hit.note, "design \xA79.2 E_FAKE_URGENCY", hit.pattern.exec(body)?.[0]));
+    const matched = hit.pattern.exec(body)?.[0];
+    if (suppliedByUser(matched)) continue;
+    violations.push(V("E_FAKE_URGENCY", "error", hit.note, "design \xA79.2 E_FAKE_URGENCY", matched));
   }
   for (const hit of scanCategory(body, "FAKE_SCARCITY")) {
-    violations.push(V("E_FAKE_SCARCITY", "error", hit.note, "design \xA79.2 E_FAKE_SCARCITY", hit.pattern.exec(body)?.[0]));
+    const matched = hit.pattern.exec(body)?.[0];
+    if (suppliedByUser(matched)) continue;
+    violations.push(V("E_FAKE_SCARCITY", "error", hit.note, "design \xA79.2 E_FAKE_SCARCITY", matched));
   }
   for (const hit of scanCategory(body, "PRESUMPTION", TRACKING_EXCLUDE_IDS)) {
     violations.push(V("E_ASSUMED_LEAD_STATE", "error", hit.note, "design \xA79.2 E_ASSUMED_LEAD_STATE", hit.pattern.exec(body)?.[0]));
@@ -2405,7 +2435,11 @@ function checkMessageAntiPatterns(body, decision) {
     violations.push(V("E_ASSUMED_OBJECTION", "error", hit.note, "design \xA79.2 E_ASSUMED_OBJECTION", hit.pattern.exec(body)?.[0]));
   }
   for (const hit of scanCategory(body, "ATTRIBUTION")) {
-    violations.push(V("E_UNSUPPORTED_ATTRIBUTION", "error", hit.note, "design \xA79.2 E_UNSUPPORTED_ATTRIBUTION", hit.pattern.exec(body)?.[0]));
+    const re = new RegExp(hit.pattern.source, hit.pattern.flags.replace("g", ""));
+    const m = re.exec(body);
+    if (!m) continue;
+    if (!ALWAYS_FLAG_ATTRIBUTION_IDS.has(hit.id) && attributionIsGrounded(body, m.index, m[0], caseText)) continue;
+    violations.push(V("E_UNSUPPORTED_ATTRIBUTION", "error", hit.note, "design \xA79.2 E_UNSUPPORTED_ATTRIBUTION", m[0]));
   }
   const vagueHits = scanCategory(body, "VAGUE_CHECKIN");
   if (vagueHits.length > 0) {
@@ -2531,8 +2565,8 @@ function validate(parsed, ctx = {}) {
         }
       }
     }
-    for (const v of checkMessageAntiPatterns(body, decision)) (v.severity === "error" ? errors : warnings).push(v);
     const caseText = groundingText(ctx);
+    for (const v of checkMessageAntiPatterns(body, decision, caseText)) (v.severity === "error" ? errors : warnings).push(v);
     const deadlineExpr = findDeadlineNearDate(body);
     if (deadlineExpr) {
       const facts = json.facts;
@@ -2702,10 +2736,10 @@ function validate(parsed, ctx = {}) {
         errors.push(V("E_RULE_MISMATCH", "error", `The engine recomputes ${engineResult.decision} from the AI's own facts; the AI answered ${decision}.`, "design \xA79.2 E_RULE_MISMATCH"));
       }
     }
-    if (safe.timing.date) {
+    if (safe.timing.date && decision === "WAIT") {
       const ref = aiFacts.commitment?.timing ?? aiFacts.notRightNow?.timing ?? null;
       const ungroundedByType = ref !== null && ref.type !== "SPECIFIC";
-      const waitMismatch = decision === "WAIT" && safe.timing.date !== engineResult.waitUntil;
+      const waitMismatch = safe.timing.date !== engineResult.waitUntil;
       if (ungroundedByType || waitMismatch) {
         errors.push(V("E_TIMING_DATE_UNGROUNDED", "error", "`timing.date` is not grounded in a SPECIFIC timing, or disagrees with the engine's `waitUntil`.", "design \xA79.2 E_TIMING_DATE_UNGROUNDED"));
       }
@@ -2827,12 +2861,13 @@ function describeViolation(v, index) {
   const suffix = v.found ? ` Found: "${v.found}"` : "";
   return `${index + 1}. [${v.code}] ${v.message}${suffix}`;
 }
-function buildRepairPrompt(report) {
+function buildRepairPrompt(report, output = "card-and-json") {
   if (report.errors.length === 0) return null;
+  const format = output === "json-only" ? "Rewrite the complete answer as ONLY the JSON object, as before (no card, no prose). Keep everything that was correct." : "Rewrite the complete answer in the same format (card, then JSON). Keep everything that was correct.";
   const lines = [
     "Your previous Lead Follow-Up Rescue answer broke these rules:",
     ...report.errors.map(describeViolation),
-    "Rewrite the complete answer in the same format (card, then JSON). Keep everything that was correct.",
+    format,
     "Do not add facts that are not in the case. If you believe a flagged item is not a violation (for example,",
     `"don't text me, email instead" is a channel preference, not a stop request), keep it and explain in`,
     '"rejectedAssumptions".'

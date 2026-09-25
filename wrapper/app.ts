@@ -874,7 +874,7 @@ async function runWithClaude(): Promise<void> {
     let report = checkAnswer(first.text, { caseInput: state.caseInput, today: state.caseInput.today });
 
     if (report.errors.length > 0) {
-      const repairPrompt = buildRepairPrompt(report);
+      const repairPrompt = buildRepairPrompt(report, "json-only");
       if (repairPrompt) {
         setClaudeStatus("Fixing a few things…");
         try {
@@ -990,7 +990,7 @@ function wireCopyButtons(): void {
 
   el<HTMLButtonElement>("tryAgainBtn").addEventListener("click", async () => {
     if (sampleFn === null || !lastReport) return;
-    const prompt = buildRepairPrompt(lastReport);
+    const prompt = buildRepairPrompt(lastReport, "json-only");
     if (!prompt) return;
     const sample = sampleFn;
     const fullPrompt = buildFullPromptText("json-only");

@@ -15,13 +15,20 @@ function describeViolation(v: Violation, index: number): string {
  * §9.8). Returns `null` when there are no errors — a warnings-only report
  * needs no repair round.
  */
-export function buildRepairPrompt(report: ValidationReport): string | null {
+export function buildRepairPrompt(
+  report: ValidationReport,
+  output: "card-and-json" | "json-only" = "card-and-json",
+): string | null {
   if (report.errors.length === 0) return null;
 
+  const format =
+    output === "json-only"
+      ? "Rewrite the complete answer as ONLY the JSON object, as before (no card, no prose). Keep everything that was correct."
+      : "Rewrite the complete answer in the same format (card, then JSON). Keep everything that was correct.";
   const lines = [
     "Your previous Lead Follow-Up Rescue answer broke these rules:",
     ...report.errors.map(describeViolation),
-    "Rewrite the complete answer in the same format (card, then JSON). Keep everything that was correct.",
+    format,
     "Do not add facts that are not in the case. If you believe a flagged item is not a violation (for example,",
     '"don\'t text me, email instead" is a channel preference, not a stop request), keep it and explain in',
     '"rejectedAssumptions".',
