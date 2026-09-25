@@ -1,0 +1,368 @@
+<title>Lead Follow-Up Rescue</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/*__STYLES__*/
+</style>
+<!--__BODY_START__-->
+<div class="page">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">&#8982;</span>
+      <span class="brand-name">Lead Follow-Up Rescue</span>
+    </div>
+    <button type="button" id="startNewCaseBtn" class="btn btn-ghost">Start a new case</button>
+  </header>
+
+  <div id="exampleBadge" class="example-badge" hidden>
+    Example: replace with your lead
+  </div>
+
+  <main class="grid">
+    <section class="pane case-pane" aria-label="Case">
+      <form id="caseForm" novalidate>
+
+        <fieldset class="field" id="field-scenario">
+          <legend>What happened?</legend>
+          <div class="chip-row" data-group="scenario">
+            <label class="chip"><input type="radio" name="scenario" id="scenario-NEW_INQUIRY" value="NEW_INQUIRY"><span>They reached out (new inquiry)</span></label>
+            <label class="chip"><input type="radio" name="scenario" id="scenario-REQUESTED_INFO" value="REQUESTED_INFO"><span>They asked me a question</span></label>
+            <label class="chip"><input type="radio" name="scenario" id="scenario-INFO_SENT" value="INFO_SENT"><span>I sent what they asked for</span></label>
+            <label class="chip"><input type="radio" name="scenario" id="scenario-PROPOSAL_SENT" value="PROPOSAL_SENT"><span>I sent a proposal or quote</span></label>
+            <label class="chip"><input type="radio" name="scenario" id="scenario-POST_MEETING" value="POST_MEETING"><span>After a call or meeting</span></label>
+            <label class="chip"><input type="radio" name="scenario" id="scenario-POST_EVENT" value="POST_EVENT"><span>Met at an event</span></label>
+            <label class="chip"><input type="radio" name="scenario" id="scenario-NOT_RIGHT_NOW" value="NOT_RIGHT_NOW"><span>They said not now</span></label>
+            <label class="chip"><input type="radio" name="scenario" id="scenario-RECONNECT_DUE" value="RECONNECT_DUE"><span>Time to reconnect</span></label>
+            <label class="chip"><input type="radio" name="scenario" id="scenario-OTHER_WARM_FOLLOWUP" value="OTHER_WARM_FOLLOWUP"><span>Something else</span></label>
+            <label class="chip"><input type="radio" name="scenario" id="scenario-NOTHING_PENDING" value="NOTHING_PENDING"><span>Nothing pending</span></label>
+          </div>
+        </fieldset>
+
+        <div class="field">
+          <label for="leadMessages">Their words</label>
+          <p class="hint">Paste their latest message(s), exactly as written.</p>
+          <textarea id="leadMessages" rows="4" maxlength="12000"></textarea>
+          <p class="charcount" id="leadMessagesCount"></p>
+        </div>
+
+        <fieldset class="field" id="field-attempts">
+          <legend>Follow-ups since their last reply</legend>
+          <div class="chip-row" data-group="attempts">
+            <label class="chip chip-sm"><input type="radio" name="attempts" id="attempts-0" value="0"><span>0</span></label>
+            <label class="chip chip-sm"><input type="radio" name="attempts" id="attempts-1" value="1"><span>1</span></label>
+            <label class="chip chip-sm"><input type="radio" name="attempts" id="attempts-2" value="2"><span>2</span></label>
+            <label class="chip chip-sm"><input type="radio" name="attempts" id="attempts-3" value="3"><span>3</span></label>
+            <label class="chip chip-sm"><input type="radio" name="attempts" id="attempts-4" value="4"><span>4</span></label>
+            <label class="chip chip-sm"><input type="radio" name="attempts" id="attempts-5" value="5"><span>5+</span></label>
+            <label class="chip chip-sm"><input type="radio" name="attempts" id="attempts-unsure" value="UNSURE"><span>Not sure</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="field" id="field-owed">
+          <legend>Is there something of theirs you haven't answered?</legend>
+          <div class="chip-row" data-group="owed">
+            <label class="chip"><input type="radio" name="owedAnswer" id="owed-no" value="NO"><span>No</span></label>
+            <label class="chip"><input type="radio" name="owedAnswer" id="owed-yes" value="YES"><span>Yes</span></label>
+            <label class="chip"><input type="radio" name="owedAnswer" id="owed-unsure" value="UNSURE"><span>Not sure</span></label>
+          </div>
+          <input type="text" id="owedText" placeholder="What did they ask for or need?" hidden>
+        </fieldset>
+
+        <fieldset class="field" id="field-stop">
+          <legend>Did they say no or ask you to stop?</legend>
+          <div class="chip-row" data-group="stop">
+            <label class="chip"><input type="radio" name="stopAnswer" id="stop-no" value="NO"><span>No</span></label>
+            <label class="chip"><input type="radio" name="stopAnswer" id="stop-decline" value="DECLINE"><span>They said no / not interested</span></label>
+            <label class="chip"><input type="radio" name="stopAnswer" id="stop-optout" value="OPT_OUT"><span>They asked me to stop contacting them</span></label>
+          </div>
+          <input type="text" id="stopWords" placeholder="Their exact words, if you have them" hidden>
+        </fieldset>
+
+        <details class="field" id="timeframeGroup">
+          <summary>Did they say when?</summary>
+          <div class="chip-row" data-group="timeframe">
+            <label class="chip"><input type="radio" name="timeframeAnswer" id="timeframe-exact" value="EXACT"><span>Exact day or date</span></label>
+            <label class="chip"><input type="radio" name="timeframeAnswer" id="timeframe-vague" value="VAGUE"><span>Vague ("after the holidays"...)</span></label>
+            <label class="chip"><input type="radio" name="timeframeAnswer" id="timeframe-none" value="NONE_GIVEN"><span>No timeframe given</span></label>
+            <label class="chip"><input type="radio" name="timeframeAnswer" id="timeframe-unsure" value="UNSURE"><span>Not sure</span></label>
+            <label class="chip"><input type="radio" name="timeframeAnswer" id="timeframe-na" value="NA"><span>Doesn't apply</span></label>
+          </div>
+          <div id="timeframeExactGroup" hidden>
+            <label for="timeframeDate">Date</label>
+            <input type="date" id="timeframeDate">
+            <label for="timeframeWords">Their words</label>
+            <input type="text" id="timeframeWords">
+          </div>
+          <div id="timeframeVagueGroup" hidden>
+            <label for="timeframeVagueWords">Their words</label>
+            <input type="text" id="timeframeVagueWords">
+            <p class="hint">Has that clearly passed?</p>
+            <div class="chip-row" data-group="vagueStatus">
+              <label class="chip chip-sm"><input type="radio" name="vagueStatus" id="vague-passed" value="PASSED"><span>Yes</span></label>
+              <label class="chip chip-sm"><input type="radio" name="vagueStatus" id="vague-future" value="FUTURE"><span>No</span></label>
+              <label class="chip chip-sm"><input type="radio" name="vagueStatus" id="vague-unsure" value="UNSURE"><span>Not sure</span></label>
+            </div>
+          </div>
+        </details>
+
+        <details class="field" id="moreDetails">
+          <summary>More details</summary>
+
+          <div class="subfield" id="field-deadline">
+            <p class="sublabel">A real deadline?</p>
+            <div class="chip-row" data-group="deadline">
+              <label class="chip"><input type="radio" name="deadlineAnswer" id="deadline-no" value="NO"><span>None</span></label>
+              <label class="chip"><input type="radio" name="deadlineAnswer" id="deadline-yes" value="YES"><span>Yes</span></label>
+            </div>
+            <div id="deadlineDetail" hidden>
+              <label for="deadlineWhat">What?</label>
+              <input type="text" id="deadlineWhat">
+              <label for="deadlineDate">Date</label>
+              <input type="date" id="deadlineDate">
+              <p class="sublabel">Whose deadline?</p>
+              <div class="chip-row" data-group="deadlineWhose">
+                <label class="chip chip-sm"><input type="radio" name="deadlineWhose" id="whose-lead" value="LEAD"><span>Theirs</span></label>
+                <label class="chip chip-sm"><input type="radio" name="deadlineWhose" id="whose-external" value="EXTERNAL"><span>External</span></label>
+                <label class="chip chip-sm"><input type="radio" name="deadlineWhose" id="whose-mine" value="MINE"><span>Only mine</span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="subfield">
+            <label for="lastLeadMessageDate">Their last message</label>
+            <input type="date" id="lastLeadMessageDate">
+            <label for="lastUserMessageDate">Your last message</label>
+            <input type="date" id="lastUserMessageDate">
+          </div>
+
+          <div class="subfield">
+            <label for="userMessages">Your messages since</label>
+            <textarea id="userMessages" rows="3"></textarea>
+          </div>
+
+          <div class="subfield">
+            <label for="originalSubject">Original email subject (for reply-in-thread)</label>
+            <input type="text" id="originalSubject">
+          </div>
+        </details>
+
+        <details class="field" id="newInfoGroup">
+          <summary>Anything genuinely new since your last message?</summary>
+          <textarea id="newInfoText" rows="2" placeholder="What's new?"></textarea>
+          <p class="hint">Connected to something they asked for or worried about?</p>
+          <div class="chip-row" data-group="newInfoLinked">
+            <label class="chip chip-sm"><input type="radio" name="newInfoLinked" id="linked-yes" value="YES"><span>Yes</span></label>
+            <label class="chip chip-sm"><input type="radio" name="newInfoLinked" id="linked-no" value="NO"><span>No</span></label>
+            <label class="chip chip-sm"><input type="radio" name="newInfoLinked" id="linked-unsure" value="UNSURE"><span>Not sure</span></label>
+          </div>
+          <input type="text" id="newInfoLinkedWords" placeholder="Their words" hidden>
+        </details>
+
+        <div class="field toggle-field" id="field-closeLoopSent" hidden>
+          <label class="toggle"><input type="checkbox" id="closeLoopSent"><span>Close-the-loop message already sent?</span></label>
+        </div>
+
+        <fieldset class="field" id="field-outcome">
+          <legend>What do you want to happen?</legend>
+          <div class="chip-row" data-group="outcome">
+            <label class="chip"><input type="radio" name="desiredOutcome" id="outcome-BOOK_CALL" value="BOOK_CALL"><span>Book a call</span></label>
+            <label class="chip"><input type="radio" name="desiredOutcome" id="outcome-GET_DECISION" value="GET_DECISION"><span>Get a decision</span></label>
+            <label class="chip"><input type="radio" name="desiredOutcome" id="outcome-RECEIVE_DOCUMENTS" value="RECEIVE_DOCUMENTS"><span>Receive documents</span></label>
+            <label class="chip"><input type="radio" name="desiredOutcome" id="outcome-CONFIRM_ATTENDANCE" value="CONFIRM_ATTENDANCE"><span>Confirm attendance</span></label>
+            <label class="chip"><input type="radio" name="desiredOutcome" id="outcome-ANSWER_QUESTION" value="ANSWER_QUESTION"><span>Answer a question</span></label>
+            <label class="chip"><input type="radio" name="desiredOutcome" id="outcome-MOVE_PROPOSAL_FORWARD" value="MOVE_PROPOSAL_FORWARD"><span>Move the proposal forward</span></label>
+            <label class="chip"><input type="radio" name="desiredOutcome" id="outcome-OTHER" value="OTHER"><span>Other</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="field" id="field-channel">
+          <legend>Channel &middot; Language &middot; Tone</legend>
+          <div class="chip-row" data-group="channel">
+            <label class="chip chip-sm"><input type="radio" name="channel" id="channel-EMAIL" value="EMAIL"><span>Email</span></label>
+            <label class="chip chip-sm"><input type="radio" name="channel" id="channel-SMS" value="SMS"><span>SMS</span></label>
+            <label class="chip chip-sm"><input type="radio" name="channel" id="channel-WHATSAPP" value="WHATSAPP"><span>WhatsApp</span></label>
+            <label class="chip chip-sm"><input type="radio" name="channel" id="channel-MESSENGER" value="MESSENGER"><span>Messenger</span></label>
+            <label class="chip chip-sm"><input type="radio" name="channel" id="channel-VIBER" value="VIBER"><span>Viber</span></label>
+            <label class="chip chip-sm"><input type="radio" name="channel" id="channel-LINKEDIN" value="LINKEDIN"><span>LinkedIn</span></label>
+            <label class="chip chip-sm"><input type="radio" name="channel" id="channel-INSTAGRAM" value="INSTAGRAM"><span>Instagram</span></label>
+            <label class="chip chip-sm"><input type="radio" name="channel" id="channel-OTHER" value="OTHER"><span>Other</span></label>
+          </div>
+          <div class="chip-row" data-group="language">
+            <label class="chip chip-sm"><input type="radio" name="language" id="lang-MATCH" value="MATCH"><span>Match their language</span></label>
+            <label class="chip chip-sm"><input type="radio" name="language" id="lang-EN" value="EN"><span>English</span></label>
+            <label class="chip chip-sm"><input type="radio" name="language" id="lang-TAGLISH" value="TAGLISH"><span>Taglish</span></label>
+            <label class="chip chip-sm"><input type="radio" name="language" id="lang-FIL" value="FIL"><span>Filipino</span></label>
+          </div>
+          <div class="chip-row" data-group="tone">
+            <label class="chip chip-sm"><input type="radio" name="tone" id="tone-WARM" value="WARM"><span>Warm</span></label>
+            <label class="chip chip-sm"><input type="radio" name="tone" id="tone-PROFESSIONAL" value="PROFESSIONAL"><span>Professional</span></label>
+            <label class="chip chip-sm"><input type="radio" name="tone" id="tone-BRIEF" value="BRIEF"><span>Brief</span></label>
+          </div>
+        </fieldset>
+
+        <div class="field">
+          <label for="notes">Your notes</label>
+          <p class="hint">Anything else. Opinions are fine; the Rescue sticks to what they actually said.</p>
+          <textarea id="notes" rows="3"></textarea>
+        </div>
+
+        <details class="field" id="privacyGroup">
+          <summary>Privacy and sign-off</summary>
+
+          <div class="subfield">
+            <label for="nameLead">Their first name</label>
+            <input type="text" id="nameLead">
+            <label for="nameMe">Your name</label>
+            <input type="text" id="nameMe">
+            <label for="nameBusiness">Business name</label>
+            <input type="text" id="nameBusiness">
+          </div>
+
+          <div class="subfield">
+            <p class="sublabel">Where is the lead?</p>
+            <div class="chip-row" data-group="leadCountry">
+              <label class="chip chip-sm"><input type="radio" name="leadCountry" id="country-PH" value="PH"><span>PH</span></label>
+              <label class="chip chip-sm"><input type="radio" name="leadCountry" id="country-US" value="US"><span>US</span></label>
+              <label class="chip chip-sm"><input type="radio" name="leadCountry" id="country-CA" value="CA"><span>Canada</span></label>
+              <label class="chip chip-sm"><input type="radio" name="leadCountry" id="country-UK" value="UK"><span>UK</span></label>
+              <label class="chip chip-sm"><input type="radio" name="leadCountry" id="country-EU" value="EU"><span>EU</span></label>
+              <label class="chip chip-sm"><input type="radio" name="leadCountry" id="country-AU" value="AU"><span>Australia</span></label>
+              <label class="chip chip-sm"><input type="radio" name="leadCountry" id="country-OTHER" value="OTHER"><span>Other</span></label>
+            </div>
+          </div>
+
+          <div class="subfield toggle-field" id="field-complianceFooter">
+            <label class="toggle"><input type="checkbox" id="complianceFooter" checked><span>Add opt-out footer to follow-up emails</span></label>
+          </div>
+
+          <div class="subfield toggle-field">
+            <label class="toggle"><input type="checkbox" id="redactToggle" checked><span>Hide contact details before sending to AI</span></label>
+          </div>
+        </details>
+      </form>
+    </section>
+
+    <aside class="pane decision-pane" aria-label="Decision" id="decision">
+      <div class="precheck-chips" id="precheckChips" aria-live="polite"></div>
+
+      <div class="ladder" id="ladder" aria-hidden="false">
+        <div class="rung" data-rung="0"><span class="rung-num">0</span><span class="rung-label">Follow up</span></div>
+        <div class="rung" data-rung="1"><span class="rung-num">1</span><span class="rung-label">Follow up</span></div>
+        <div class="rung" data-rung="2"><span class="rung-num">2</span><span class="rung-label">New angle</span></div>
+        <div class="rung" data-rung="3"><span class="rung-num">3</span><span class="rung-label">Make it easy</span></div>
+        <div class="rung" data-rung="4"><span class="rung-num">4+</span><span class="rung-label">Close the loop</span></div>
+      </div>
+      <p class="ladder-caption" id="ladderCaption" hidden></p>
+
+      <div class="slip" id="slip" aria-live="polite">
+        <div class="slip-top">
+          <span class="slip-code" id="slipDecisionCode">&nbsp;</span>
+          <span class="slip-name" id="slipDecisionName"></span>
+        </div>
+        <p class="slip-reason" id="slipReason"></p>
+        <div class="slip-perforation" aria-hidden="true"></div>
+        <p class="slip-message-state" id="slipMessageState"></p>
+        <div id="slipQuestions" class="slip-questions" hidden></div>
+      </div>
+
+      <div class="actions">
+        <button type="button" id="runClaudeBtn" class="btn btn-primary" hidden>Run with Claude</button>
+        <p class="fineprint" id="runClaudeFineprint" hidden>Uses your own Claude account.</p>
+        <label class="toggle" id="thinkHarderLabel" hidden><input type="checkbox" id="thinkHarder"><span>Think harder (slower)</span></label>
+        <div id="claudeStatus" class="claude-status" aria-live="polite"></div>
+        <p id="claudeUnavailableNote" class="fineprint" hidden>Claude isn't available here. Copy the prompt into any AI instead.</p>
+
+        <button type="button" id="copyPromptBtn" class="btn btn-primary">Copy prompt for any AI</button>
+        <p id="copyStepText" class="copy-steps" hidden>1. Copied. 2. Open your AI. 3. Paste and send. 4. Paste its answer back here to check it.</p>
+        <div class="ai-links" id="aiLinks" hidden>
+          <a id="linkChatGPT" href="https://chatgpt.com/" target="_blank" rel="noopener">ChatGPT</a>
+          <a id="linkClaude" href="https://claude.ai/new" target="_blank" rel="noopener">Claude</a>
+          <a id="linkGemini" href="https://gemini.google.com/app" target="_blank" rel="noopener">Gemini</a>
+          <a id="linkCopilot" href="https://copilot.microsoft.com/" target="_blank" rel="noopener">Copilot</a>
+        </div>
+        <p class="fineprint">For privacy, use a temporary or incognito chat, and turn off training on your chats in your AI's settings.</p>
+
+        <details id="perAiTips" class="per-ai-tips">
+          <summary>Per-AI tips</summary>
+          <ul>
+            <li><strong>ChatGPT:</strong> use Temporary Chat; if Canvas opens, ask it to answer in the chat.</li>
+            <li><strong>Claude:</strong> use an Incognito chat; the prompt asks for an inline answer (no artifact or file).</li>
+            <li><strong>Gemini:</strong> use a temporary chat.</li>
+            <li><strong>Copilot:</strong> if the prompt is rejected as too long, use Copy compact prompt.</li>
+          </ul>
+        </details>
+
+        <p class="size-meter" id="sizeMeter"></p>
+
+        <button type="button" id="copyCompactBtn" class="btn btn-secondary">Copy compact prompt</button>
+        <button type="button" id="copyShortBtn" class="btn btn-secondary">Using a saved assistant? Copy the short version</button>
+      </div>
+
+      <div class="check-answer">
+        <label for="answerInput">Check an answer &mdash; paste your AI's full answer</label>
+        <textarea id="answerInput" rows="4"></textarea>
+      </div>
+
+      <div id="resultCard" class="result-card" hidden>
+        <p class="result-status" id="resultStatus"></p>
+        <div class="result-section">
+          <span class="slip-code" id="resultDecisionCode"></span>
+          <span class="slip-name" id="resultDecisionName"></span>
+        </div>
+        <div class="result-section"><h3>Timing</h3><p id="resultTiming"></p></div>
+        <div class="result-section"><h3>Reason</h3><p id="resultReason"></p></div>
+        <div class="result-section"><h3>Action</h3><p id="resultAction"></p></div>
+        <div class="result-section" id="resultMessageSection">
+          <h3>Message</h3>
+          <p id="resultMessageBody" class="message-body"></p>
+          <button type="button" id="copyMessageBtn" class="btn btn-secondary">Copy message</button>
+          <p class="hint" id="placeholderNote" hidden>Fill these in before sending.</p>
+        </div>
+        <div class="result-section"><h3>If no response</h3><p id="resultNoResponsePlan"></p></div>
+        <div class="result-section"><h3>Do not</h3><ul id="resultDoNotDo"></ul></div>
+        <div class="result-section"><h3>Stop active follow-up</h3><span class="pill" id="resultStopFlag"></span></div>
+        <div class="result-section" id="resultMissingInfoSection" hidden>
+          <h3>Missing information</h3>
+          <div id="resultMissingInfo"></div>
+          <button type="button" id="rerunBtn" class="btn btn-secondary">Re-run</button>
+        </div>
+        <details class="result-section" id="resultEvidenceSection">
+          <summary>What this is based on</summary>
+          <ul id="resultEvidence"></ul>
+        </details>
+        <div class="result-section" id="resultFactMismatchSection" hidden>
+          <p class="notice" id="resultFactMismatch"></p>
+        </div>
+        <div class="result-section">
+          <h3>Checks</h3>
+          <ul id="resultChecks"></ul>
+        </div>
+        <div class="result-section" id="resultFixItSection" hidden>
+          <button type="button" id="copyFixItBtn" class="btn btn-secondary" hidden>Copy fix-it prompt</button>
+          <button type="button" id="tryAgainBtn" class="btn btn-secondary" hidden>Try again</button>
+          <button type="button" id="copyFinishBtn" class="btn btn-secondary" hidden>Copy "please finish" prompt</button>
+        </div>
+      </div>
+
+      <div class="privacy-note">
+        <p class="fineprint" id="privacyFooterNote">Nothing you type leaves this page unless you send it to an AI yourself.</p>
+        <p class="fineprint">Share the minimum. Avoid sensitive data (health, finances, IDs). For client work, prefer a business AI plan with a data-processing agreement.</p>
+        <button type="button" id="forgetBtn" class="btn btn-ghost">Forget this case</button>
+      </div>
+
+      <p class="version-note">Engine v<span id="engineVersion"></span> &middot; prompt v<span id="promptVersion"></span> &middot; schema <span id="schemaVersion"></span></p>
+    </aside>
+  </main>
+
+  <div class="sticky-bar" id="stickyBar" hidden>
+    <span id="stickyDecision"></span>
+    <a href="#decision" id="stickyLink">See next step</a>
+  </div>
+</div>
+
+<textarea id="clipboardFallback" class="clipboard-fallback" readonly aria-hidden="true" tabindex="-1"></textarea>
+
+<script>
+/*__SCRIPT__*/
+</script>

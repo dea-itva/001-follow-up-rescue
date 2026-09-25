@@ -1,3 +1,7 @@
 node_modules
 coverage
 eval/reports/*.json
+test-results
+playwright-report
+blob-report
+playwright/.cache

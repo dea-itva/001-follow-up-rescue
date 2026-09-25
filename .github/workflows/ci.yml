@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    name: typecheck, test, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit + fixture tests
+        run: npm test
+
+      - name: Build (dist/ + skill/)
+        run: npm run build
+
+  ui:
+    name: Playwright UI smoke tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - run: npm ci
+
+      # No PW_CHROMIUM in this job's environment: playwright.config.ts falls
+      # back to the browser Playwright itself installs here, rather than the
+      # /opt/pw-browsers/chromium path used in the preinstalled dev sandbox
+      # (docs/design/TECHNICAL_DESIGN.md §13).
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build (dist/lead-follow-up-rescue.html is what the UI tests exercise)
+        run: npm run build
+
+      - name: UI smoke tests
+        run: npm run test:ui

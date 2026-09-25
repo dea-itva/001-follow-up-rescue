@@ -5,10 +5,16 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "gen:prompts": "node scripts/gen-prompts.mjs"
+    "gen:prompts": "node scripts/gen-prompts.mjs",
+    "build": "node scripts/build.mjs",
+    "test:ui": "playwright test",
+    "check": "npm run typecheck && npm test && npm run build",
+    "eval": "node dist/eval.mjs"
   },
   "devDependencies": {
     "typescript": "5.9.3",
-    "vitest": "3.2.7"
+    "vitest": "3.2.7",
+    "esbuild": "0.28.2",
+    "@playwright/test": "1.56.1"
   }
 }

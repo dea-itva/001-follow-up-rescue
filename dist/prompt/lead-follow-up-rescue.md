@@ -1,10 +1,3 @@
----
-name: lead-follow-up-rescue
-description: Use when deciding the next step for one warm lead who has gone quiet, or drafting a follow-up message for them, so the decision follows a fixed procedure instead of guesswork.
----
-
-<!-- Generated from prompt/lead-follow-up-rescue.md by scripts/build.mjs; edit the source, not this file. -->
-
 Lead Follow-Up Rescue · engine prompt v1.0.0 · output schema lfr/1.0
 
 ## 1. Role and job
@@ -232,3 +225,4 @@ LFR_JSON_END
 ````
 
 **One-line STOP example:** `DECISION: STOP_ACTIVE_FOLLOW_UP (Stop) · REASON: They asked to stop ("please remove me from your list"). · ACTION: Log as do-not-contact, every channel. · MESSAGE: None · STOP ACTIVE FOLLOW-UP: Yes` (JSON: `"suppression":"OPT_OUT"`, `"message":null`, `"cta":null`).
+
